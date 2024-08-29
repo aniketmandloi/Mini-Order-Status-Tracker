@@ -8,6 +8,8 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
 
 interface Order {
   id: number;
@@ -19,6 +21,7 @@ type BadgeVariant = "default" | "secondary" | "outline" | "destructive";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,6 +37,14 @@ const OrdersPage = () => {
     Completed: "default",
     Pending: "secondary",
     Processing: "outline",
+  };
+
+  const handleLogout = () => {
+    // Clear the token from local storage (or handle your session management)
+    localStorage.removeItem("token");
+
+    // Redirect to the login page
+    router.push("/login");
   };
 
   return (
@@ -61,6 +72,11 @@ const OrdersPage = () => {
           ))}
         </TableBody>
       </Table>
+      <div className="mt-6">
+        <Button onClick={handleLogout} className="w-30">
+          Logout
+        </Button>
+      </div>
     </div>
   );
 };
