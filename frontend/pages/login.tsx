@@ -23,6 +23,10 @@ const Login = () => {
     }
   };
 
+  const handleNavigateToRegister = () => {
+    router.push("/register");
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-md">
@@ -41,7 +45,24 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-4"
         />
-        <Button onClick={handleLogin}>Login</Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Button onClick={handleLogin}>Login</Button>
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+            Don't have an account?{" "}
+            <span
+              onClick={handleNavigateToRegister}
+              className="text-primary cursor-pointer hover:underline"
+            >
+              Create account
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
