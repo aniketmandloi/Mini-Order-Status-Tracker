@@ -7,12 +7,15 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 interface Order {
   id: number;
   customer: string;
   status: string;
 }
+
+type BadgeVariant = "default" | "secondary" | "outline" | "destructive";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -27,23 +30,33 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
+  const statusVariantMap: { [key: string]: BadgeVariant } = {
+    Completed: "default",
+    Pending: "secondary",
+    Processing: "outline",
+  };
+
   return (
-    <div className="bg-blue-100 p-6">
-      <h1 className="text-2xl font-bold mb-4">Orders</h1>
-      <Table className="min-w-full border">
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Orders</h1>
+      <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="border p-2">Order ID</TableHead>
-            <TableHead className="border p-2">Customer Name</TableHead>
-            <TableHead className="border p-2">Status</TableHead>
+            <TableHead className="w-[150px]">Order ID</TableHead>
+            <TableHead>Customer Name</TableHead>
+            <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
-            <TableRow key={order.id} className="hover:bg-gray-100">
-              <TableCell className="border p-2">{order.id}</TableCell>
-              <TableCell className="border p-2">{order.customer}</TableCell>
-              <TableCell className="border p-2">{order.status}</TableCell>
+            <TableRow key={order.id}>
+              <TableCell>{order.id}</TableCell>
+              <TableCell>{order.customer}</TableCell>
+              <TableCell>
+                <Badge variant={statusVariantMap[order.status] || "default"}>
+                  {order.status}
+                </Badge>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
