@@ -1,4 +1,12 @@
 import { useState, useEffect } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
 interface Order {
   id: number;
@@ -20,26 +28,26 @@ const OrdersPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="bg-blue-100 p-6">
       <h1 className="text-2xl font-bold mb-4">Orders</h1>
-      <table className="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Order ID</th>
-            <th className="px-4 py-2">Customer Name</th>
-            <th className="px-4 py-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table className="min-w-full border">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="border p-2">Order ID</TableHead>
+            <TableHead className="border p-2">Customer Name</TableHead>
+            <TableHead className="border p-2">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {orders.map((order) => (
-            <tr key={order.id}>
-              <td className="border px-4 py-2">{order.id}</td>
-              <td className="border px-4 py-2">{order.customer}</td>
-              <td className="border px-4 py-2">{order.status}</td>
-            </tr>
+            <TableRow key={order.id} className="hover:bg-gray-100">
+              <TableCell className="border p-2">{order.id}</TableCell>
+              <TableCell className="border p-2">{order.customer}</TableCell>
+              <TableCell className="border p-2">{order.status}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 };
